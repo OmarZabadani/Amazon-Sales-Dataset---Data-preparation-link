@@ -1,11 +1,3 @@
-# ==========================================================
-# AMAZON SALES DATASET - DATA PREPROCESSING
-# ==========================================================
-
-# ===============================
-# 1. Import Libraries
-# ===============================
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -13,31 +5,17 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 
-
-# ===============================
-# 2. Import Dataset
-# ===============================
-
 data = pd.read_csv("/content/amazon.csv")
 
 
 print("Dataset Loaded Successfully")
 print("Dataset Shape:", data.shape)
 
-display(data.head())
+print(data.head())
 
-
-# ===============================
-# 3. Dataset Information
-# ===============================
 
 print("\nDataset Information:")
 data.info()
-
-
-# ===============================
-# 4. Check Duplicates
-# ===============================
 
 print("\nDuplicates Before:")
 print(data.duplicated().sum())
@@ -52,10 +30,6 @@ print("\nDuplicates After:")
 print(data.duplicated().sum())
 
 
-# ===============================
-# 5. Check Missing Values
-# ===============================
-
 print("\nMissing Values:")
 print(data.isnull().sum())
 
@@ -67,11 +41,6 @@ data = data.dropna()
 
 print("\nMissing Values After Cleaning:")
 print(data.isnull().sum())
-
-
-# ===============================
-# 6. Convert Numerical Columns
-# ===============================
 
 # Discounted Price
 
@@ -134,11 +103,6 @@ for col in [
         inplace=True
     )
 
-
-# ===============================
-# 7. Select Features
-# ===============================
-
 ml_data = data[
     [
         "discounted_price",
@@ -152,12 +116,7 @@ ml_data = data[
 
 
 print("\nSelected Features:")
-display(ml_data.head())
-
-
-# ===============================
-# 8. Encode Categorical Data
-# ===============================
+print(ml_data.head())
 
 encoder = LabelEncoder()
 
@@ -167,12 +126,7 @@ ml_data["category"] = encoder.fit_transform(
 
 
 print("\nAfter Encoding:")
-display(ml_data.head())
-
-
-# ===============================
-# 9. Normalize Data
-# ===============================
+print(ml_data.head())
 
 scaler = MinMaxScaler()
 
@@ -186,15 +140,9 @@ scaled_data = pd.DataFrame(
     scaled_data,
     columns=ml_data.columns
 )
-
-
 print("\nAfter Normalization:")
-display(scaled_data.head())
+print(scaled_data.head())
 
-
-# ===============================
-# 10. Create Target Classes
-# ===============================
 
 data["rating_class"] = pd.cut(
     data["rating"],
@@ -205,14 +153,7 @@ data["rating_class"] = pd.cut(
         "High"
     ]
 )
-
-
-# ===============================
-# 11. Train/Test Split
-# ===============================
-
 X = scaled_data
-
 y = data["rating_class"]
 
 
